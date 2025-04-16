@@ -1,9 +1,6 @@
-from bd.connection import conectar_db
 import mysql.connector
 
-def crear_tabla():
-    db = conectar_db()
-    cursor = db.cursor()
+def crear_tabla(db, cursor):
     
     # SQL para crear la tabla
     crear_tabla_citas = """
@@ -11,7 +8,8 @@ def crear_tabla():
         id INT AUTO_INCREMENT PRIMARY KEY,
         nombre_paciente VARCHAR(255) NOT NULL,
         fecha_hora DATETIME NOT NULL,
-        motivo_consulta TEXT NOT NULL
+        motivo_consulta TEXT NOT NULL,
+        sello_integridad VARCHAR(10) NOT NULL
     );
     """
     try:
@@ -19,6 +17,3 @@ def crear_tabla():
         print("Tabla 'citas' creada con éxito.")
     except mysql.connector.Error as err:
         print(f"Error: {err}")
-    finally:
-        cursor.close()
-        db.close()
